@@ -1,0 +1,19 @@
+{
+  "name": "puppeteer-service",
+  "description": "a service to generate PDF from HTML using puppeteer",
+  "author": "Dmitri Sotnikov",
+  "version": "1.0.0",
+  "homepage": "https://github.com/yogthos/puppeteer-service",
+  "repository": "https://github.com/yogthos/puppeteer-service",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "5.4.1"
+  },
+  "devDependencies": {
+    "shadow-cljs": "^2.11.7"
+  },
+  "main": "puppeteer-service.js",
+  "bin": {
+    "report-service": "./puppeteer-service.js"
+  }
+}
