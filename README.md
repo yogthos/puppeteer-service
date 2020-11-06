@@ -1,6 +1,14 @@
 ## puppeteer service
 
-The reporting service accepts a request in format of: `{:html "<html>Hello</html>" :options {}}`, where `:html` should contain the HTML document to be rendered, and the `:options` specifies Puppeteer options that the service should use to render the document. The HTML must embed CSS and Js associated with it.
+The reporting service accepts a request in format of: 
+
+```clojure
+{:html "<html>Hello</html>"
+ :css "p {color: red}"
+ :options {}}
+```
+
+where `:html` should contain the HTML document to be rendered, `:css` contains all the styles, and the `:options` specifies Puppeteer options that the service should use to render the document. The HTML must embed CSS and Js associated with it.
 
 ### Building
 

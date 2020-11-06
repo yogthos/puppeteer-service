@@ -24,11 +24,12 @@
       (exit-with-error (str "config file does not exist: " config)))
     nil))
 
-(defn render-page [page {:keys [html options]} handler error-handler]
+(defn render-page [page {:keys [html css options]} handler error-handler]
   (try
     (.then page
-           (fn [page _]             
+           (fn [page _]
              (-> (.setContent ^js page html)
+                 (.then #(if css (.addStyleTag ^js page (clj->js {:content css})) %))
                  (.then (fn [_ _]
                           (-> (.pdf ^js page (clj->js options))
                               (.then handler)
@@ -59,6 +60,6 @@
                               (-> (.launch puppeteer (clj->js {:args ["--no-sandbox" "--disable-setuid-sandbox"]}))
                                   (.then (fn [browser _] (.newPage ^js browser)))
                                   (listener)))]
-    (println "starting reporting service on port: " (:port config))
+    (println "starting puppeteer service on port: " (:port config))
     (.listen server (:port config))))
 
