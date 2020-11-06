@@ -1,9 +1,9 @@
 ## puppeteer service
 
-The reporting service accepts a request in format of: 
+The service accepts a POST request with a body in the format of: 
 
 ```clojure
-{:html "<html>Hello</html>"
+{:html "<html><body><p>Hello</p></body></html>"
  :css "p {color: red}"
  :options {}}
 ```
