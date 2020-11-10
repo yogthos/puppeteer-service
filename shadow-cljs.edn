@@ -1,5 +1,5 @@
 {:source-paths ["src"]
  :dependencies []
  :builds       {:app {:target    :node-script
-                      :output-to "puppeteer-service.js"
+                      :output-to "bin/puppeteer-service.js"
                       :main      puppeteer-service.core/main}}}

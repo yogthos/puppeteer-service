@@ -1,5 +1,6 @@
 (ns test-client.core
   (:require 
+   [clojure.string :as str]
    [babashka.curl :as curl]
    [clojure.java.io :as io]))
 
@@ -21,11 +22,13 @@
         :else (str v)))
 
 (io/copy
- (:body (curl/get "http://localhost:3000" {:body (str {:html (html [:html
-                                                                    [:body
-                                                                     [:h1 "Hello World!"]
-                                                                     [:p "this is a test"]]])
-                                                       :css "p {color: blue} h1 {color: red}"
-                                                       :options {}}) :as :stream}))
+ (:body (curl/get "http://localhost:3000" {:body (str {:html    (html [:html
+                                                                       [:body
+                                                                        [:h1 "Hello World!"]
+                                                                        [:p "this is a test"]]])
+                                                       :css     "p {color: blue} h1 {color: red}"
+                                                       :options {}})
+                                           :as   :stream}))
  (io/file "result.pdf"))
+
 

@@ -56,10 +56,18 @@
 
 (defn main []
   (let [config (read-edn (find-config))
-        server (.createServer http 
-                              (-> (.launch puppeteer (clj->js {:args ["--no-sandbox" "--disable-setuid-sandbox"]}))
-                                  (.then (fn [browser _] (.newPage ^js browser)))
-                                  (listener)))]
-    (println "starting puppeteer service on port: " (:port config))
+        browser (.launch puppeteer (clj->js {:args ["--no-sandbox" "--disable-setuid-sandbox"]}))
+        server  (.createServer http
+                               (-> browser
+                                   (.then (fn [browser _] (.newPage ^js  browser)))
+                                   (listener)))
+        shutdown (fn [browser]
+                   (println "shutting down")
+                   (.close server)
+                   (.close browser)
+                   (js/process.exit 0))]
+    (js/process.on "SIGINT" #(.then browser shutdown))
+    (js/process.on "SIGTERM" #(.then browser shutdown))
+    (println "starting reporting service on port: " (:port config))
     (.listen server (:port config))))
 
