@@ -40,12 +40,12 @@
 
 (defn listener [page]
   (fn [req res]
-    (let [body (js/Array.)]
-      (.on ^js req "data" #(.push body %))
+    (let [body (goog.string.StringBuffer. "")]
+      (.on ^js req "data" #(.append body (.toString %)))
       (.on ^js req "end"
-           #(render-page page 
+           #(render-page page
                          (read-string (.toString body))
-                         (fn [data]                                                  
+                         (fn [data]
                            (.setHeader ^js res "Content-type" "application/pdf")
                            (.end ^js res data))
                          (fn [error]
